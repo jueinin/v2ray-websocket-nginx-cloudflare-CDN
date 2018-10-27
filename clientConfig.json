@@ -1,0 +1,62 @@
+{
+  "inbound": {
+    "port": 1080,
+    "listen": "127.0.0.1",
+    "protocol": "socks",
+    "domainOverride": ["tls","http"],
+    "settings": {
+      "auth": "noauth",
+      "udp": false
+    }
+  },
+  "outbound": {
+    "protocol": "vmess",
+    "settings": {
+      "vnext": [
+        {
+          "address": "strongman.cf",
+          "port": 443,
+          "users": [
+            {
+              "id": "6e7148d5-be50-4186-b4d4-5d7fa418e1c2",
+              "alterId": 64
+            }
+          ]
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "ws",
+      "security": "tls",
+      "wsSettings": {
+        "path": "/chenliang"
+      }
+    }
+  },
+  "outboundDetour": [
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "IPOnDemand",
+      "rules": [
+        {
+          "type": "field",
+          "outboundTag": "direct",
+          "domain": ["geosite:cn"]
+        },
+        {
+          "type": "chinaip",
+          "outboundTag": "direct",
+          "ip": ["geoip:cn"]
+        }
+      ]
+    }
+  }
+  
+}
