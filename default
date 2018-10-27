@@ -9,7 +9,8 @@
 # file but keep this around for reference. Or just disable in sites-enabled.
 #
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
-##
+
+##                                                 这里是nginx的配置文件
 
 # Default server configuration
 #
@@ -37,7 +38,7 @@ server {
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm index.nginx-debian.html;
 
-	server_name strongman.cf;
+	server_name YOURDOAMIN.NAME; #这里我也不太清楚，好像要填自己的域名
 
 	location / {
 		# First attempt to serve request as file, then
@@ -83,23 +84,24 @@ server {
 #		try_files $uri $uri/ =404;
 #	}
 #}
-
+#下面才是关键，上面不弄http重定向到https的话  一般不用管
 server {
   listen  443 ssl;
   ssl on;
   ssl_certificate       /etc/v2ray/v2ray.crt;
-  ssl_certificate_key   /etc/v2ray/v2ray.key;
+  ssl_certificate_key   /etc/v2ray/v2ray.key;#这里按那个白话文教程把证书及密钥保存到这里直接用 方便
   ssl_protocols         TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers           HIGH:!aNULL:!MD5;
-  server_name           strongman.cf;
-        location = /chenliang {
+  server_name           YOURDOMAIN.NAME; #域名
+        location = /tttest { #与服务端客户端一致
         proxy_redirect off;
-        proxy_pass http://127.0.0.1:39625;
+        proxy_pass http://127.0.0.1:39625;#端口与服务端一致
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Host $http_host;
         }
+	#下面的是我做的反向代理，这个做不做都行，不过保密性更好一些
 		location / {
 		proxy_pass https://www.viewster.com;
 		proxy_set_header  X-Real-IP  $remote_addr;
