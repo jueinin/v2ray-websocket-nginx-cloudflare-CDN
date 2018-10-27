@@ -9,16 +9,16 @@
       "udp": false
     }
   },
-  "outbound": {
+  "outbound": {                             //凡是大写的填写自己的信息
     "protocol": "vmess",
     "settings": {
       "vnext": [
         {
-          "address": "strongman.cf",
+          "address": "YOURDOMAIN.NAME",//填自己的域名，xxx.xx
           "port": 443,
           "users": [
             {
-              "id": "6e7148d5-be50-4186-b4d4-5d7fa418e1c2",
+              "id": "填写你自己的UUID",
               "alterId": 64
             }
           ]
@@ -29,7 +29,7 @@
       "network": "ws",
       "security": "tls",
       "wsSettings": {
-        "path": "/chenliang"
+        "path": "/tttest" //自定义也可以，保持nginx和这个一致就行
       }
     }
   },
@@ -48,7 +48,7 @@
         {
           "type": "field",
           "outboundTag": "direct",
-          "domain": ["geosite:cn"]
+          "domain": ["geosite:cn"]//这里国内直连
         },
         {
           "type": "chinaip",
