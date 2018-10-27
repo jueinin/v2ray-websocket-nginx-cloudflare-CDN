@@ -12,7 +12,7 @@ https://toutyrater.github.io/advanced/tls.html
 
 nginx配置文件在/etc/nginx/default
 
-记得申请证书的时候把nginx关闭掉，不然会报错，如果提前搞了cloud flare也关掉，还有配置文件修改完毕之后重启服务才能生效
+记得申请证书的时候把apache卸载了，把nginx关闭掉，不然会报错，如果提前搞了cloud flare也关掉，还有配置文件修改完毕之后重启服务才能生效这个很关键的，不然看着配置文件累死都找不到毛病其实是配置文件没更新。。。。我就被这个坑撞的不要不要的
 
 systemctl restart nginx;systemctl restart v2ray
 
