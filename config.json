@@ -1,12 +1,12 @@
 {
   "inbound": {
-    "port": 39625,
+    "port": 39625,  //服务端配置
     "listen":"127.0.0.1",
     "protocol": "vmess",
     "settings": {
       "clients": [
         {
-          "id": "6e7148d5-be50-4186-b4d4-5d7fa418e1c2",
+          "id": "填自己的UUID，与客户端一致",
           "alterId": 64
         }
       ]
@@ -14,7 +14,7 @@
     "streamSettings": {
       "network": "ws",
       "wsSettings": {
-      "path": "/chenliang"
+      "path": "/tttest" //与客户端，nginx一致就行
       }
     }
   },
