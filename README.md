@@ -11,11 +11,17 @@ https://toutyrater.github.io/advanced/tls.html
 这篇教程基本上就是运行三个命令就行了
 
 首先关闭nginx：systemctl stop nginx
+
 curl  https://get.acme.sh | sh
+
 上面这个命令会让你安装socat，安装一下。apt install socat
+
 ~/.acme.sh/acme.sh --issue -d mydomain.me --standalone -k ec-256
+
 把上面命令的mydomain.me替换成你自己的域名，如果nginx已经关闭了，而且cloudflare添加了指向自己服务器ip的域名解析，并且没有点云朵，应该会提示安装成功了
+
 然后执行这个  ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
+
 上面这个就是把证书文件换个位置，别忘了把mydomain.me换成自己的域名，这样证书就申请完成了
 
 然后把我那三个配置文件，你自己改一改，改成自己的信息
