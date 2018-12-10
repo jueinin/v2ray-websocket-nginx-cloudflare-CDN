@@ -4,6 +4,46 @@
 
 配置文件升级4.0版本，做了一些小修改
 
+
+
+简洁版！！！
+
+
+
+
+先去申请域名然后搞定cloud flare的域名解析，确保云朵没有点
+apt update
+
+curl  https://get.acme.sh | sh
+
+apt install socat
+
+~/.acme.sh/acme.sh --issue -d mydomain.me --standalone -k ec-256
+我上下的两条命令记得域名换成自己的
+~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
+
+证书安装完成！
+
+然后仓库三个配置文件复制一下，default文件改好之后放到/etc/nginx/sites-avaliable/default   服务端文件放在/etc/v2ray/config.json
+
+都保存之后  systemctl restart nginx      systemctl restart v2ray
+
+然后用客户端配置文件改一下，不出意外应该能连上了，连不上提issues
+
+最后把cloud flare云朵点上去就可以开启cdn了
+
+结束！
+
+
+
+
+
+清楚版！！！
+
+
+
+
+
 首先根据下面这篇教程把证书及密钥弄弄好
 
 https://toutyrater.github.io/advanced/tls.html
@@ -57,35 +97,7 @@ cloud flare好像要把那个ssl打开，websocket转发是默认打开的，别
 
 
 
-简洁版！！！
 
-
-
-
-
-
-先去申请域名然后搞定cloud flare的域名解析，确保云朵没有点
-apt update
-
-curl  https://get.acme.sh | sh
-
-apt install socat
-
-~/.acme.sh/acme.sh --issue -d mydomain.me --standalone -k ec-256
-我上下的两条命令记得域名换成自己的
-~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
-
-证书安装完成！
-
-然后仓库三个配置文件复制一下，default文件改好之后放到/etc/nginx/sites-avaliable/default   服务端文件放在/etc/v2ray/config.json
-
-都保存之后  systemctl restart nginx      systemctl restart v2ray
-
-然后用客户端配置文件改一下，不出意外应该能连上了，连不上提issues
-
-最后把cloud flare云朵点上去就可以开启cdn了
-
-结束！
 
 
 
