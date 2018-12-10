@@ -22,7 +22,7 @@
               "alterId": 16
             }
           ]
-        }
+        } 
       ]
     },
     "streamSettings": {
