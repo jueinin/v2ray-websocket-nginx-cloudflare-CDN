@@ -1,109 +1,41 @@
 # v2ray-websocket-nginx-cloudflare-CDN
-一个v2ray+websocket+nginx+cloudflare CDN的简单教程，人人为我，我为人人
-18.12.10更新：
 
-配置文件升级4.0版本，做了一些小修改
+一个v2ray+websocket+nginx+cloudflare CDN的简单教程,大概是目前最安全的科学上网方式吧
 
+### 第一步整个机器
+这个就不用多说了,买个就是了,不知道在哪买可以上[主机百科](https://www.zhujiwiki.com)随便挑一个
+最好有一点点linux使用基础.建议使用xshell连接SSH,配合xftp直接本地编辑好文件然后传上去,命令行编辑文件感觉不太爽
 
+### 第二步申请域名
+可以买一个,也可以[在freenom免费申请一个](https://www.freenom.com),申请完成后应看到这样的图
+![pic](./assets/freenom.png)
 
-简洁版！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
 
-先去申请域名然后搞定cloud flare的域名解析，确保云朵没有点
+### 第三步申请cloudflare账号
+申请的时候会给一串nameServer地址,进入freenom的管理后台填上去就行
+![pic](./assets/nameserver.png)到这里就把DNS交给cloudflare管理了
 
-apt update
+### 第四步 安装配置v2ray
+在ubuntu16测试通过  
+- bash <(curl -L -s https://install.direct/go.sh)   安装v2ray
+- 生成证书,可以参考[这里](https://guide.v2fly.org/advanced/tls.html#%E8%AF%81%E4%B9%A6%E7%94%9F%E6%88%90),下文假设你通过这个指南成功的安装了证书
+并且放到了指定位置
+- 安装nginx
+    - apt install nginx
+- 复制粘贴小小的修改几个配置文件即可
+    - 把[这个文件](./assets/服务端配置文件.json)内容直接替换 `/etc/v2ray`下的config.json的内容,服务端的配置文件就解决了
+    - 然后处理nginx的配置文件,直接把[这个文件]的内容替换掉 `/etc/nginx/sites-available/default`这个文件的内容,此时要确定下输入https加域名能跑得起来才行.
+    - 客户端的配置文件稍微麻烦一点,windows可以选择用[v2rayN](https://github.com/2dust/v2rayN),去release页面下载
+    安卓可以用[v2rayNG](https://github.com/2dust/v2rayNG),配置文件里把域名换成自己的  然后导入到软件里
+- systemctl restart nginx 
+- systemctl restart v2ray 
+- 然后可以尝试连接一下,不出意外应该可以了 *没错就是这么快!*
 
-curl  https://get.acme.sh | sh
+### 在cloudflare页面把云朵打勾即可
 
-apt install socat
+### 安装BBR加速
+bbr脚本在[这里](https://github.com/chiakge/Linux-NetSpeed),建议装BBR PLUS,用着还行
 
-~/.acme.sh/acme.sh --issue -d mydomain.me --standalone -k ec-256
-我上下的两条命令记得域名换成自己的
-~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
 
-证书安装完成！
 
-然后仓库三个配置文件复制一下，default文件改好之后放到/etc/nginx/sites-avaliable/default   服务端文件放在/etc/v2ray/config.json
-
-都保存之后  systemctl restart nginx      systemctl restart v2ray
-
-然后用客户端配置文件改一下，不出意外应该能连上了，连不上提issues
-
-最后把cloud flare云朵点上去就可以开启cdn了
-
-结束！
-
-
-
-
-
-清楚版！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-
-
-
-
-
-首先根据下面这篇教程把证书及密钥弄弄好
-
-https://toutyrater.github.io/advanced/tls.html
-
-这篇教程基本上就是运行三个命令就行了
-
-首先关闭nginx：systemctl stop nginx
-
-curl  https://get.acme.sh | sh
-
-上面这个命令会让你安装socat，安装一下。apt install socat
-
-~/.acme.sh/acme.sh --issue -d mydomain.me --standalone -k ec-256
-
-把上面命令的mydomain.me替换成你自己的域名，如果nginx已经关闭了，而且cloudflare添加了指向自己服务器ip的域名解析，并且没有点云朵，应该会提示安装成功了
-
-然后执行这个  ~/.acme.sh/acme.sh --installcert -d mydomain.me --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
-
-上面这个就是把证书文件换个位置，别忘了把mydomain.me换成自己的域名，这样证书就申请完成了
-
-然后把我那三个配置文件，你自己改一改，改成自己的信息
-
-我Ubuntu16.04下服务端配置文件在/etc/v2ray/config.json
-
-nginx配置文件在/etc/nginx/sites-avaliable/default
-
-记得申请证书的时候把apache卸载了，把nginx关闭掉，不然会报错，如果提前搞了cloud flare也关掉，还有配置文件修改完毕之后重启服务才能生效这个很关键的，不然看着配置文件累死都找不到毛病其实是配置文件没更新。。。。我就被这个坑撞的不要不要的
-
-systemctl restart nginx;systemctl restart v2ray
-
-确保一下输入https;//你的域名可以跑起来，这个很关键
-
-三个文件弄好之后,如果ip没被墙就可以试着连接一下了，我觉得应该能连上的，不能连上欢迎提issue
-
-这个时候呢如果能连上，可以开启一波cloud flare了。
-
-这个东西会转发websocket流量，可以隐藏掉ip，我感觉基本上封也是封cloudflare的ip了  23333.。。
-
-cloud flare好像要把那个ssl打开，websocket转发是默认打开的，别给关了。
-
-一般没用cloud flare之前能连上用了之后应该也能连上；
-
-有人说cloud flare是减速器有人说是加速器，反正在我机子上是加速器，感觉还可以，我的机子是最便宜最垃圾的ovz玩具机，以前直接装一个ssr到了晚高峰的时候大概只能跑1-5mbps，弄成v2ray加bbr加cdn之后能跑到三十mbps。。流畅1080p，不过他虽然网速还可以，但是是延迟还是什么原因浏览网页的时候会加载的相对慢一些，个人感觉可以接受
-
-另外如果是ovz的机子想要装bbr，可以用仓库的那个bbr文件，南墙大佬写的，在此致谢。端口号填你服务端的端口号就行。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-tips：
-
-
-安卓端用bifrostv或者v2rayNg的时候记得把dns改成114.114.114.114 不然会挺卡的，原理不明
-
-
+    

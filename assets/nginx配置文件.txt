@@ -1,5 +1,5 @@
-##
-# You should look at the following URL's in order to grasp a solid understanding
+
+#u should look at the following URL's in order to grasp a solid understanding
 # of Nginx configuration files in order to fully unleash the power of Nginx.
 # https://www.nginx.com/resources/wiki/start/
 # https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
@@ -51,6 +51,7 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
+
 	# pass PHP scripts to FastCGI server
 	#
 	#location ~ \.php$ {
@@ -100,9 +101,9 @@ server {
   ssl_protocols         TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers           HIGH:!aNULL:!MD5;
   server_name           YOURDOMAIN.NAME; #填写域名，不填好像也行，问题不大
-        location = /tttttest { #与服务端客户端一致
+        location = /ccc { #与服务端客户端一致
         proxy_redirect off;
-        proxy_pass http://127.0.0.1:39625;#端口与服务端一致
+        proxy_pass http://127.0.0.1:10086;#端口与服务端一致
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -114,4 +115,4 @@ server {
 							proxy_set_header  X-Real-IP  $remote_addr;
 							        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 							        		}
-							        		} 
+							        		}
