@@ -24,7 +24,7 @@
     - apt install nginx
 - 复制粘贴小小的修改几个配置文件即可
     - 把[这个文件](./assets/服务端配置文件.json)内容直接替换 `/etc/v2ray`下的config.json的内容,服务端的配置文件就解决了
-    - 然后处理nginx的配置文件,直接把[这个文件]的内容替换掉 `/etc/nginx/sites-available/default`这个文件的内容,此时要确定下输入https加域名能跑得起来才行.
+    - 然后处理nginx的配置文件,直接把[这个文件](./assets/nginx配置文件.txt)的内容替换掉 `/etc/nginx/sites-available/default`这个文件的内容,此时要确定下输入https加域名能跑得起来才行.
     - 客户端的配置文件稍微麻烦一点,windows可以选择用[v2rayN](https://github.com/2dust/v2rayN),去release页面下载
     安卓可以用[v2rayNG](https://github.com/2dust/v2rayNG),配置文件里把域名换成自己的  然后导入到软件里
 - systemctl restart nginx 
