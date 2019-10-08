@@ -2,6 +2,10 @@
 
 一个v2ray+websocket+nginx+cloudflare CDN的简单教程,大概是目前最安全的科学上网方式吧
 
+## 懒人福利
+整了个简单的docker,两行命令跑一下即可,简单快速,适合快速部署,并且适应各种环境,详情见[这里](./DOCKER.md)
+
+
 ### 第一步整个机器
 这个就不用多说了,买个就是了,不知道在哪买可以上[主机百科](https://www.zhujiwiki.com)随便挑一个
 最好有一点点linux使用基础.建议使用xshell连接SSH,配合xftp直接本地编辑好文件然后传上去,命令行编辑文件感觉不太爽
@@ -17,8 +21,13 @@
 
 ### 第四步 安装配置v2ray
 在ubuntu16测试通过  
+- apt install curl socat -y
 - bash <(curl -L -s https://install.direct/go.sh)   安装v2ray
-- 生成证书,可以参考[这里](https://guide.v2fly.org/advanced/tls.html#%E8%AF%81%E4%B9%A6%E7%94%9F%E6%88%90),下文假设你通过这个指南成功的安装了证书
+- 生成证书
+    - curl https://get.acme.sh | sh 
+    - ~/.acme.sh/acme.sh --issue -d $V2RAY_DOMAIN --standalone -k ec-256
+    - ~/.acme.sh/acme.sh --installcert -d $V2RAY_DOMAIN --fullchainpath /app/config/v2ray.crt --keypath /app/config/v2ray.key --ecc
+    - 把上面两个命令的$V2RAY_DOMAIN换成自己的域名即可,然后生成的证书在/etc/v2ray目录下
 并且放到了指定位置
 - 安装nginx
     - apt install nginx

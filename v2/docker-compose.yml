@@ -1,0 +1,42 @@
+version: "3"
+services:
+  v2:
+    image: v2ray/official
+    container_name: v2
+    volumes:
+      - /root/config:/etc/v2ray
+    networks:
+      - my-net
+    depends_on:
+      - main
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    container_name: nginx
+    volumes:
+      - /root/config:/etc/nginx/conf.d
+      - /root/config:/etc/v2ray
+    networks:
+      - my-net
+    ports:
+      - 443:443
+      - 81:80
+    depends_on:
+      - main
+  main:
+    build:
+      context: .
+      dockerfile: Dockerfile-main
+    container_name: v2-main
+    volumes:
+      - /root/config:/app/config
+    ports:
+      - 80:80 # 这个容器必须得占用个80端口去申请证书
+    networks:
+      - my-net
+
+
+networks:
+  my-net:
+    driver: bridge
