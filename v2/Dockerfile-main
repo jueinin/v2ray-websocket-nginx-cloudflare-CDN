@@ -10,7 +10,7 @@ ENV V2RAY_DOMAIN example.com
 VOLUME /app/config
 EXPOSE 80
 RUN apt update && apt install nodejs curl socat wget cron -y && mkdir test && nodejs index.js
-
+# 构建时不能使用volume存储,使用test临时文件夹代替
 CMD mv ./test/* ./config && curl https://get.acme.sh | sh && ~/.acme.sh/acme.sh --issue -d $V2RAY_DOMAIN --standalone -k ec-256 \
  && ~/.acme.sh/acme.sh --installcert -d $V2RAY_DOMAIN --fullchainpath /app/config/v2ray.crt --keypath /app/config/v2ray.key --ecc \
  && echo "tls ok !!!!!!!!!!!!!!!" \
