@@ -48,6 +48,10 @@
 ### 安装BBR加速
 bbr脚本在[这里](https://github.com/chiakge/Linux-NetSpeed),建议装BBR PLUS,用着还行
 
+### tips
+可以选择欧洲机器加上cf速度飞快啊,用docker部署很快,可以vultr多开几个机器看看哪边的比较快,后面选择这个地区就好了.
+安卓端推荐使用kitsunebi,v2rayNG用起来有点卡啊,不清楚什么原因
+
 
 
     
