@@ -10,12 +10,13 @@ bbr脚本在[这里](https://github.com/chiakge/Linux-NetSpeed),建议装BBR PLU
     - chmod +x /usr/local/bin/docker-compose
 - 安装git
     - apt install git -y
-`git clone https://github.com/jueinin/v2ray-websocket-nginx-cloudflare-CDN.git`
-`cd v2ray-websocket-nginx-cloudflare-CDN/v2`  然后编辑Dockerfile-main,修改$V2RAY_DOMAIN为你的域名(一定确保域名解析到这个机器的ip,关闭cf的云朵!),其他的参数最好也改一下
+`git clone https://github.com/jueinin/v2ray-websocket-nginx-cloudflare-CDN.git`  
+`cd v2ray-websocket-nginx-cloudflare-CDN/v2`   
+ 然后编辑Dockerfile-main,修改$V2RAY_DOMAIN为你的域名(一定确保域名解析到这个机器的ip,关闭cf的云朵!),其他的参数最好也改一下
 
 `docker-compose up -d  `
 
-过一分钟后执行`docker container restart nginx`  (因为才入了个门docker,不太清楚怎么控制启动顺序,只能启动失败后重启一下了)
+过一分钟等自动申请证书完毕后执行`docker container restart nginx`  (因为才入了个门docker,不太清楚怎么控制启动顺序,只能启动失败后重启一下了)
 
 看看是不是可以了,客户端配置文件在`/root/config/client.json` 改个名本地用v2跑一下即可连上
 记得手机客户端连接的话,手动设置时证书域名这个不要填,否则就算连上了速度也不超过10kb,原因未知
