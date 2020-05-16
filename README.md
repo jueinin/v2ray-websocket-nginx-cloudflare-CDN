@@ -28,7 +28,7 @@
 - 生成证书
     - curl https://get.acme.sh | sh 
     - ~/.acme.sh/acme.sh --issue -d $V2RAY_DOMAIN --standalone -k ec-256
-    - ~/.acme.sh/acme.sh --installcert -d $V2RAY_DOMAIN --fullchainpath /app/config/v2ray.crt --keypath /app/config/v2ray.key --ecc
+    - ~/.acme.sh/acme.sh --installcert -d $V2RAY_DOMAIN --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
     - 把上面两个命令的$V2RAY_DOMAIN换成自己的域名即可,然后生成的证书在/etc/v2ray目录下
     - 注意证书需要占用80端口去申请,确保申请的时候未被占用
 并且放到了指定位置
