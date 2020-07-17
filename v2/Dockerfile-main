@@ -4,14 +4,14 @@ COPY index.js /app/index.js
 ENV V2RAY_ID d45a79b4-6094-41cf-923d-42731e7ecf3e
 ENV V2RAY_WS_PATH "/ccc"
 ENV V2RAY_SERVER_PORT 10086
-ENV V2RAY_CLIENT_PORT 1080
+ENV V2RAY_CLIENT_PORT 1080  #客户端socks端口，用clash的话可以忽略
 ENV V2RAY_DOMAIN example.com
 # 这里必须改成自己的域名,上面的安全起见也可以改一改
 VOLUME /app/config
 EXPOSE 80
 RUN apt update && apt install nodejs curl socat wget cron -y && mkdir test && nodejs index.js
 # 构建时不能使用volume存储,使用test临时文件夹代替
-CMD mv ./test/* ./config && curl https://get.acme.sh | sh && ~/.acme.sh/acme.sh --issue -d $V2RAY_DOMAIN --standalone -k ec-256 \
- && ~/.acme.sh/acme.sh --installcert -d $V2RAY_DOMAIN --fullchainpath /app/config/v2ray.crt --keypath /app/config/v2ray.key --ecc \
- && echo "tls ok !!!!!!!!!!!!!!!" \
-  && tail -f /dev/null
+CMD mv ./test/* ./config && wget -O - https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh | INSTALLONLINE=1 sh && ~/.acme.sh/acme.sh --issue -d $V2RAY_DOMAIN --standalone -k ec-256 \
+    && ~/.acme.sh/acme.sh --installcert -d $V2RAY_DOMAIN --fullchainpath /app/config/v2ray.crt --keypath /app/config/v2ray.key --ecc \
+    && echo "tls ok" \
+    && tail -f /dev/null
